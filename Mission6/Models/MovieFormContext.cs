@@ -12,15 +12,30 @@ namespace Mission6.Models
             //leave blank for now
         }
         public DbSet<MovieFormResponse> responses { get; set; }
+        public DbSet<Category> categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<Category>().HasData(
+                new Category
+                {
+                    CategoryID = 1,
+                    CategoryName = "Action, Adventure, Drama"
+                },
+                new Category
+                {
+                    CategoryID = 2,
+                    CategoryName = "Fantasy"
+                }
+                );
+
+
             mb.Entity<MovieFormResponse>().HasData(
                 // add 3 entries into the database
                 new MovieFormResponse
                 {
                     ApplicationID = 1,
-                    Category = "Action, Adventure, Drama",
+                    CategoryID = 1,
                     Title = "The Lord of the Rings: The Fellowship of the Ring",
                     Year = "2001",
                     Director = "Peter Jackson",
@@ -32,7 +47,7 @@ namespace Mission6.Models
                 new MovieFormResponse
                 {
                     ApplicationID = 2,
-                    Category = "Action, Adventure, Drama",
+                    CategoryID = 1,
                     Title = "The Lord of the Rings: The Two Towers",
                     Year = "2002",
                     Director = "Peter Jackson",
@@ -44,7 +59,7 @@ namespace Mission6.Models
                 new MovieFormResponse
                 {
                     ApplicationID = 3,
-                    Category = "Action, Adventure, Drama",
+                    CategoryID = 1,
                     Title = "The Lord of the Rings: The Return of the Ring",
                     Year = "2003",
                     Director = "Peter Jackson",
@@ -53,7 +68,6 @@ namespace Mission6.Models
                     LentTo = "Nobody",
                     Notes = "Words cannot describe how great this movie is!"
                 }
-
                 );
         }
     }

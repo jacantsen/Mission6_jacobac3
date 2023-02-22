@@ -1,16 +1,23 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{            ViewData["Title"] = "Movie Form";
+@{
+    ViewData["Title"] = "Movie Form";
 }
 @model Mission6.Models.MovieFormResponse;
 <!--Movie Input Form-->
 <form method="post">
     <div asp-validation-summary="All"></div>
-    <label asp-for="Category">Category</label>
-    <input asp-for="Category" type="text"> <br />
+    <label asp-for="CategoryID">Category</label>
+    <select asp-for="CategoryID" type="text">
+        <option value="">Select a Category</option>
+        @foreach (Category c in ViewBag.Categories)
+        {
+            <option value="@c.CategoryID">@c.CategoryName</option>
+        }
+    </select> <br />
     <label asp-for="Title">Title</label>
-    <input asp-for ="Title" type="text"><br />
+    <input asp-for="Title" type="text"><br />
     <label asp-for="Year">Year</label>
     <input asp-for="Year" type="text"><br />
     <label asp-for="Director">Director</label>
@@ -26,8 +33,8 @@
     <input asp-for="Edited" type="radio" name="edited" value="true"> Yes
     <input asp-for="Edited" type="radio" name="edited" value="false"> No<br />
     <label asp-for="LentTo">Lent To</label>
-    <input asp-for="LentTo" type="text"/><br />
+    <input asp-for="LentTo" type="text" /><br />
     <label asp-for="Notes">Notes</label>
     <input asp-for="Notes" type="text"><br />
-    <button type="submit" >Submit</button>
+    <button type="submit">Submit</button>
 </form>

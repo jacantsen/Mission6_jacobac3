@@ -8,7 +8,7 @@ using Mission6.Models;
 namespace Mission6.Migrations
 {
     [DbContext(typeof(MovieFormContext))]
-    [Migration("20230213204911_Initial")]
+    [Migration("20230221210539_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,15 +17,40 @@ namespace Mission6.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
-            modelBuilder.Entity("Mission6.Models.MovieResponse", b =>
+            modelBuilder.Entity("Mission6.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action, Adventure, Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Fantasy"
+                        });
+                });
+
+            modelBuilder.Entity("Mission6.Models.MovieFormResponse", b =>
                 {
                     b.Property<int>("ApplicationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -55,13 +80,15 @@ namespace Mission6.Migrations
 
                     b.HasKey("ApplicationID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             ApplicationID = 1,
-                            Category = "Action, Adventure, Drama",
+                            CategoryID = 1,
                             Director = "Peter Jackson",
                             Edited = false,
                             LentTo = "Nobody",
@@ -73,7 +100,7 @@ namespace Mission6.Migrations
                         new
                         {
                             ApplicationID = 2,
-                            Category = "Action, Adventure, Drama",
+                            CategoryID = 1,
                             Director = "Peter Jackson",
                             Edited = false,
                             LentTo = "Nobody",
@@ -85,7 +112,7 @@ namespace Mission6.Migrations
                         new
                         {
                             ApplicationID = 3,
-                            Category = "Action, Adventure, Drama",
+                            CategoryID = 1,
                             Director = "Peter Jackson",
                             Edited = false,
                             LentTo = "Nobody",
@@ -94,6 +121,15 @@ namespace Mission6.Migrations
                             Title = "The Lord of the Rings: The Return of the Ring",
                             Year = "2003"
                         });
+                });
+
+            modelBuilder.Entity("Mission6.Models.MovieFormResponse", b =>
+                {
+                    b.HasOne("Mission6.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -12,19 +12,21 @@ namespace Mission6.Models
         [Key]
         [Required]
         public int ApplicationID { get; set; }
-        [Required]
-        public string Category { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Title is required" )]
         public string Title { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Year is required")]
         public string Year { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Director is required")]
         public string Director { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Rating is required")]
         public string Rating { get; set; }
         public bool Edited { get; set; }
         public string LentTo { get; set; }
         [MaxLength(25)]
         public string Notes { get; set; }
+        [Required(ErrorMessage = "The Category is required")]
+        // foreign key
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
     }
 }
